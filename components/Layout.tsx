@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactElement } from "react";
 import { css } from "@emotion/react";
 
 const headerStyle = css`
@@ -21,7 +21,7 @@ const mainStyle = css`
   padding: 80px 10px;
 `;
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default function Layout({ children }: { children: ReactElement }) {
   return (
     <div>
       <header css={headerStyle}>NARAS 🌏</header>
