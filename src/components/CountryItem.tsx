@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import ICountry from "@/types/ICountry";
+import Image from "next/image";
 
 export default function CountryItem({
   code,
@@ -21,7 +22,9 @@ export default function CountryItem({
 
   return (
     <SContainer onClick={onClickItem}>
-      <SFlagImg src={flagImg} />
+      <SFlagImg>
+        <Image src={flagImg} alt={code} fill priority />
+      </SFlagImg>
       <SContent>
         <SName>
           {flagEmoji} {commonName}
@@ -42,10 +45,10 @@ const SContainer = styled.div`
   cursor: pointer;
 `;
 
-const SFlagImg = styled.img`
+const SFlagImg = styled.div`
+  position: relative;
   width: 100%;
   height: 150px;
-  object-fit: cover;
 `;
 
 const SContent = styled.div`
