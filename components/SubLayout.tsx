@@ -1,7 +1,16 @@
 import type { ReactElement } from "react";
-import { css } from "@emotion/react";
+import styled from "@emotion/styled";
 
-const footerStyle = css`
+export default function SubLayout({ children }: { children: ReactElement }) {
+  return (
+    <div className="SubLayout">
+      <div>{children}</div>
+      <SFooter>@sryung1225</SFooter>
+    </div>
+  );
+}
+
+const SFooter = styled.footer`
   border-top: 1px solid rgb(230, 230, 230);
   padding-top: 20px;
   margin-top: 20px;
@@ -9,12 +18,3 @@ const footerStyle = css`
   color: gray;
   font-size: 14px;
 `;
-
-export default function SubLayout({ children }: { children: ReactElement }) {
-  return (
-    <div className="SubLayout">
-      <div>{children}</div>
-      <footer css={footerStyle}>@sryung1225</footer>
-    </div>
-  );
-}
