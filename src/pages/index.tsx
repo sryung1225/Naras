@@ -1,12 +1,14 @@
 import { fetchCountries } from "@/api";
+import CountryList from "@/components/CountryList";
 import Searchbar from "@/components/Searchbar";
 import ICountires from "@/types/ICountries";
 
 export default function Home({ countries }: ICountires) {
   return (
-    <div>
+    <>
       <Searchbar />
-    </div>
+      <CountryList countries={countries} />
+    </>
   );
 }
 

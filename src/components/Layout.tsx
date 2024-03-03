@@ -25,6 +25,9 @@ const SHeader = styled.header`
 `;
 
 const SMain = styled.main`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   max-width: 700px;
   margin: 0 auto;
   padding: 80px 10px;
