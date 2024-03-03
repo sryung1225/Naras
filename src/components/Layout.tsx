@@ -1,10 +1,15 @@
 import type { ReactElement } from "react";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 
 export default function Layout({ children }: { children: ReactElement }) {
+  const router = useRouter();
+  const onClickHeader = () => {
+    router.push("/");
+  };
   return (
     <div>
-      <SHeader>NARAS 🌏</SHeader>
+      <SHeader onClick={onClickHeader}>NARAS 🌏</SHeader>
       <SMain>{children}</SMain>
     </div>
   );
