@@ -12,11 +12,9 @@ export default function CountryItem({
   region,
   capital,
 }: ICountry) {
-  // const router = useNavigate();
   const router = useRouter();
 
   const onClickItem = () => {
-    // nav(`/country/${code}`);
     router.push(`/country/${code}`);
   };
 

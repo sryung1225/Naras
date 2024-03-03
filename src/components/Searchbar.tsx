@@ -9,7 +9,6 @@ import styled from "@emotion/styled";
 
 export default function Searchbar({ q }: { q?: string }) {
   const [search, setSearch] = useState("");
-  // const nav = useNavigate();
   const router = useRouter();
 
   useEffect(() => {
@@ -28,7 +27,6 @@ export default function Searchbar({ q }: { q?: string }) {
 
   const onClickSearch = () => {
     if (search !== "") {
-      // nav(`/search?q=${search}`);
       router.push(`/search?q=${search}`);
     }
   };
