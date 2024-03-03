@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import SubLayout from "@/components/SubLayout";
 import ICountry from "@/types/ICountry";
 import { fetchSearchResults } from "@/api";
+import Searchbar from "@/components/Searchbar";
+import CountryList from "@/components/CountryList";
 
 export default function Search() {
   // url parameter를 이용하는 country/[code].ts는 어느정도 한정적인 경우의 수
@@ -30,11 +32,10 @@ export default function Search() {
   // => 검색 결과 데이터는 api가 완료되는 시점에 client 측에서 추가로 렌더링
 
   return (
-    <div>
-      {countries.map((country) => (
-        <div key={country.code}>{country.commonName}</div>
-      ))}
-    </div>
+    <>
+      <Searchbar q={q} /> {/* 검색어 입력값 유지 */}
+      <CountryList countries={countries} />
+    </>
   );
 }
 

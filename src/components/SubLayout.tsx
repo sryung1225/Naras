@@ -3,10 +3,10 @@ import styled from "@emotion/styled";
 
 export default function SubLayout({ children }: { children: ReactElement }) {
   return (
-    <div className="SubLayout">
-      <div>{children}</div>
+    <>
+      {children}
       <SFooter>@sryung1225</SFooter>
-    </div>
+    </>
   );
 }
 
