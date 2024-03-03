@@ -8,3 +8,14 @@ export async function fetchCountries() {
     return [];
   }
 }
+
+export async function fetchSearchResults(q: string) {
+  try {
+    const response = await axios.get(`
+  https://naras-api.vercel.app/search?q=${q}
+  `);
+    return response.data;
+  } catch (e) {
+    return [];
+  }
+}
