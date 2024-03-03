@@ -1,16 +1,11 @@
 import { fetchCountries } from "@/api";
-import ICountry from "@/types/ICountry";
+import Searchbar from "@/components/Searchbar";
+import ICountires from "@/types/ICountries";
 
-interface IHome {
-  countries: ICountry[];
-}
-
-export default function Home({ countries }: IHome) {
+export default function Home({ countries }: ICountires) {
   return (
     <div>
-      {countries.map((country) => (
-        <div key={country.code}>{country.commonName}</div>
-      ))}
+      <Searchbar />
     </div>
   );
 }

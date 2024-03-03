@@ -12,7 +12,7 @@ export default function Search() {
   // => useRouter를 사용해 query string만 가져와 mount되었을 때 api 호출하도록 함
 
   const router = useRouter();
-  const { q } = router.query;
+  const q = typeof router.query.q === "string" ? router.query.q : undefined;
 
   const [countries, setCountries] = useState<ICountry[]>([]);
 

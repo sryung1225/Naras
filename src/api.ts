@@ -9,7 +9,7 @@ export async function fetchCountries() {
   }
 }
 
-export async function fetchSearchResults(q: any) {
+export async function fetchSearchResults(q?: string) {
   try {
     const response = await axios.get(`
   https://naras-api.vercel.app/search?q=${q}
