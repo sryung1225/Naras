@@ -1,4 +1,6 @@
 import { useRouter } from "next/router";
+import Image from "next/image";
+import styled from "@emotion/styled";
 import { fetchCountry } from "@/api";
 import SubLayout from "@/components/SubLayout";
 import ICountry from "@/types/ICountry";
@@ -6,6 +8,8 @@ import ICountry from "@/types/ICountry";
 export default function Country({ country }: { country: ICountry }) {
   const router = useRouter();
   const { code } = router.query;
+
+  console.log(country);
 
   if (router.isFallback) {
     // fallback: true일 때 사용. html에 해당 코드가 저장됨
@@ -17,9 +21,39 @@ export default function Country({ country }: { country: ICountry }) {
   }
 
   return (
-    <div>
-      {code} {country.commonName} {country.officialName}
-    </div>
+    <SContainer>
+      <SHeader>
+        <SCommonName>
+          {country.flagEmoji}&nbsp;{country.commonName}
+        </SCommonName>
+        <SOfficalName>{country.officialName}</SOfficalName>
+      </SHeader>
+      <SFlagImg>
+        <Image
+          src={country.flagImg}
+          alt={`${country.commonName}의 국기 이미지입니다.`}
+          fill
+          priority
+        />
+      </SFlagImg>
+      <SBody>
+        <div>
+          <b>코드 :</b>&nbsp;{country.code}
+        </div>
+        <div>
+          <b>수도 :</b>&nbsp;{country.capital.join(", ")}
+        </div>
+        <div>
+          <b>지역 :</b>&nbsp;{country.region}
+        </div>
+        <div>
+          <b>지도 :</b>&nbsp;
+          <a target="_blank" href={country.googleMapURL}>
+            {country.googleMapURL}
+          </a>
+        </div>
+      </SBody>
+    </SContainer>
   );
 }
 
@@ -48,3 +82,35 @@ export const getStaticProps = async (context: any) => {
     },
   };
 };
+
+const SContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+`;
+
+const SHeader = styled.div`
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgb(230, 230, 230);
+`;
+
+const SOfficalName = styled.p``;
+
+const SCommonName = styled.p`
+  font-size: 30px;
+  font-weight: bold;
+`;
+
+const SBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
+const SFlagImg = styled.div`
+  position: relative;
+  width: 320px;
+  height: 213px;
+`;
