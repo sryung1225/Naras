@@ -6,4 +6,6 @@ export default interface ICountry {
   capital: [string];
   region: string;
   population: number;
+  officialName?: string;
+  googleMapURL?: string;
 }

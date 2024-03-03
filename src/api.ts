@@ -19,3 +19,14 @@ export async function fetchSearchResults(q: string) {
     return [];
   }
 }
+
+export async function fetchCountry(code: string) {
+  try {
+    const response = await axios.get(
+      `https://naras-api.vercel.app/code/${code}`
+    );
+    return response.data;
+  } catch (e) {
+    return null;
+  }
+}
