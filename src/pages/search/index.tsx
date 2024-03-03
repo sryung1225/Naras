@@ -1,12 +1,34 @@
-import { fetchSearchResults } from "@/api";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import SubLayout from "@/components/SubLayout";
 import ICountry from "@/types/ICountry";
+import { fetchSearchResults } from "@/api";
 
-interface ISearch {
-  countries: ICountry[];
-}
+export default function Search() {
+  // url parameter를 이용하는 country/[code].ts는 어느정도 한정적인 경우의 수
+  // 그와 다르게 query string은 대응해야 할 수가 너무 많기 때문에 동적 경로라고 보지 않음 : getStaticPaths 사용 X
 
-export default function Search({ countries }: ISearch) {
+  // => getStaticProps를 과감히 지우고 컴포넌트 내부에서 작업
+  // => useRouter를 사용해 query string만 가져와 mount되었을 때 api 호출하도록 함
+
+  const router = useRouter();
+  const { q } = router.query;
+
+  const [countries, setCountries] = useState<ICountry[]>([]);
+
+  useEffect(() => {
+    const setData = async () => {
+      const data = await fetchSearchResults(q);
+      setCountries(data);
+    };
+    if (q) {
+      setData();
+    } // query string이 변경되거나 mount되었을 때 api 호출
+  }, [q]);
+
+  // => 최초 빈 div만 렌더링 됐다가
+  // => 검색 결과 데이터는 api가 완료되는 시점에 client 측에서 추가로 렌더링
+
   return (
     <div>
       {countries.map((country) => (
@@ -17,23 +39,3 @@ export default function Search({ countries }: ISearch) {
 }
 
 Search.Layout = SubLayout;
-
-export const getServerSideProps = async (context: any) => {
-  // 1. 검색 결과 API 호출
-  // 2. Props 리턴
-
-  // context 매개변수에는 브라우저에서 받은 요청의 정보들이 담김
-  // => 검색어가 담긴 query string도 context 안에서 가져올 수 있음
-  const { q } = context.query;
-
-  let countries = [];
-  if (q) {
-    countries = await fetchSearchResults(q);
-  }
-
-  return {
-    props: {
-      countries,
-    },
-  };
-};
