@@ -5,6 +5,7 @@ import ICountry from "@/types/ICountry";
 import { fetchSearchResults } from "@/api";
 import Searchbar from "@/components/Searchbar";
 import CountryList from "@/components/CountryList";
+import Head from "next/head";
 
 export default function Search() {
   // url parameter를 이용하는 country/[code].ts는 어느정도 한정적인 경우의 수
@@ -33,6 +34,15 @@ export default function Search() {
 
   return (
     <>
+      <Head>
+        <title>NARAS 검색 결과</title>
+        <meta property="og:image" content="/thumbnail.png" />
+        <meta property="og:title" content="NARAS 검색 결과" />
+        <meta
+          property="og:description"
+          content="전 세계 국가들의 정보를 확인해보세요"
+        />
+      </Head>
       <Searchbar q={q} /> {/* 검색어 입력값 유지 */}
       <CountryList countries={countries} />
     </>

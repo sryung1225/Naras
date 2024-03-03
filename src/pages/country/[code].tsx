@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import { fetchCountry } from "@/api";
@@ -12,8 +13,21 @@ export default function Country({ country }: { country: ICountry }) {
   console.log(country);
 
   if (router.isFallback) {
-    // fallback: true일 때 사용. html에 해당 코드가 저장됨
-    return <div>Loading...</div>;
+    // fallback: true일 때 사용. 최초 html에 해당 코드가 저장됨
+    return (
+      <>
+        <Head>
+          <title>NARAS</title>
+          <meta property="og:image" content="/thumbnail.png" />
+          <meta property="og:title" content="NARAS" />
+          <meta
+            property="og:description"
+            content="전 세계 국가들의 정보를 확인해보세요"
+          />
+        </Head>
+        <div>Loading...</div>
+      </>
+    );
   }
   if (!country) {
     // fallback: "blocking" 중에 아래 return문에 접근해 에러를 발생하는 경우 방어
@@ -21,39 +35,53 @@ export default function Country({ country }: { country: ICountry }) {
   }
 
   return (
-    <SContainer>
-      <SHeader>
-        <SCommonName>
-          {country.flagEmoji}&nbsp;{country.commonName}
-        </SCommonName>
-        <SOfficalName>{country.officialName}</SOfficalName>
-      </SHeader>
-      <SFlagImg>
-        <Image
-          src={country.flagImg}
-          alt={`${country.commonName}의 국기 이미지입니다.`}
-          fill
-          priority
+    <>
+      <Head>
+        <title>{country.commonName} 국가 정보 조회 | NARAS</title>
+        <meta property="og:image" content={country.flagImg} />
+        <meta
+          property="og:title"
+          content={`${country.commonName} 국가 정보 조회 | NARAS`}
         />
-      </SFlagImg>
-      <SBody>
-        <div>
-          <b>코드 :</b>&nbsp;{country.code}
-        </div>
-        <div>
-          <b>수도 :</b>&nbsp;{country.capital.join(", ")}
-        </div>
-        <div>
-          <b>지역 :</b>&nbsp;{country.region}
-        </div>
-        <div>
-          <b>지도 :</b>&nbsp;
-          <a target="_blank" href={country.googleMapURL}>
-            {country.googleMapURL}
-          </a>
-        </div>
-      </SBody>
-    </SContainer>
+        <meta
+          property="og:description"
+          content={`${country.commonName} 국가의 자세한 정보입니다.`}
+        />
+      </Head>
+      <SContainer>
+        <SHeader>
+          <SCommonName>
+            {country.flagEmoji}&nbsp;{country.commonName}
+          </SCommonName>
+          <SOfficalName>{country.officialName}</SOfficalName>
+        </SHeader>
+        <SFlagImg>
+          <Image
+            src={country.flagImg}
+            alt={`${country.commonName}의 국기 이미지입니다.`}
+            fill
+            priority
+          />
+        </SFlagImg>
+        <SBody>
+          <div>
+            <b>코드 :</b>&nbsp;{country.code}
+          </div>
+          <div>
+            <b>수도 :</b>&nbsp;{country.capital.join(", ")}
+          </div>
+          <div>
+            <b>지역 :</b>&nbsp;{country.region}
+          </div>
+          <div>
+            <b>지도 :</b>&nbsp;
+            <a target="_blank" href={country.googleMapURL}>
+              {country.googleMapURL}
+            </a>
+          </div>
+        </SBody>
+      </SContainer>
+    </>
   );
 }
 
